@@ -10,11 +10,8 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/gorilla/schema"
 	"github.com/tangowithfoxtrot/go_vault_management_api/src/schemas"
 )
-
-var decoder = schema.NewDecoder()
 
 type ClientSettings struct {
 	baseURL  string
@@ -29,6 +26,22 @@ type IClientSettings interface {
 	Status() (schemas.StatusResponse, error)
 	Sync() (schemas.SyncResponse, error)
 	Generate() (schemas.GeneratorResponse, error)
+	GetFingerprint() (schemas.FingerprintResponse, error)
+}
+
+func (c *ClientSettings) GetFingerprint() (schemas.FingerprintResponse, error) {
+	resp, err := http.Get(c.baseURL + "object/fingerprint/me")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var fingerprintResponse schemas.FingerprintResponse
+	err = json.NewDecoder(resp.Body).Decode(&fingerprintResponse)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return fingerprintResponse, nil
 }
 
 func (c *ClientSettings) Generate(params schemas.GeneratorParams) (schemas.GeneratorResponse, error) {
@@ -39,7 +52,6 @@ func (c *ClientSettings) Generate(params schemas.GeneratorParams) (schemas.Gener
 
 	// Append the query parameters to the URL
 	url := c.baseURL + "generate?" + v.Encode()
-	// fmt.Println(url)
 
 	resp, err := http.Get(url)
 	if err != nil {
