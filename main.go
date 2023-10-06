@@ -81,4 +81,88 @@ func main() {
 		log.Fatal("Error getting fingerprint: ", err)
 	}
 	prettyPrintJSON(fingerprintResponse)
+
+	// Make an item template request
+	itemTemplateResponse, err := client.GetTemplate("item")
+	if err != nil {
+		log.Fatal("Error getting item template: ", err)
+	}
+	prettyPrintJSON(itemTemplateResponse)
+
+	// Make a login item template request
+	loginTemplateResponse, err := client.GetTemplate("item.login")
+	if err != nil {
+		log.Fatal("Error getting login template: ", err)
+	}
+	prettyPrintJSON(loginTemplateResponse)
+
+	// Make an item.field template request
+	itemFieldTemplateResponse, err := client.GetTemplate("item.field")
+	if err != nil {
+		log.Fatal("Error getting item field template: ", err)
+	}
+	prettyPrintJSON(itemFieldTemplateResponse)
+
+	// Make an item.login.uri template request
+	itemLoginUriTemplateResponse, err := client.GetTemplate("item.login.uri")
+	if err != nil {
+		log.Fatal("Error getting item login uri template: ", err)
+	}
+	prettyPrintJSON(itemLoginUriTemplateResponse)
+
+	// Make an item.card template request
+	itemCardTemplateResponse, err := client.GetTemplate("item.card")
+	if err != nil {
+		log.Fatal("Error getting item card template: ", err)
+	}
+	prettyPrintJSON(itemCardTemplateResponse)
+
+	// Make an item.identity template request
+	itemIdentityTemplateResponse, err := client.GetTemplate("item.identity")
+	if err != nil {
+		log.Fatal("Error getting item identity template: ", err)
+	}
+	prettyPrintJSON(itemIdentityTemplateResponse)
+
+	// Make an item.securenote template request
+	itemSecureNoteTemplateResponse, err := client.GetTemplate("item.securenote")
+	if err != nil {
+		log.Fatal("Error getting item secure note template: ", err)
+	}
+	prettyPrintJSON(itemSecureNoteTemplateResponse)
+
+	// Make a folder template request
+	folderTemplateResponse, err := client.GetTemplate("folder")
+	if err != nil {
+		log.Fatal("Error getting folder template: ", err)
+	}
+	prettyPrintJSON(folderTemplateResponse)
+
+	// Make a collection template request
+	collectionTemplateResponse, err := client.GetTemplate("collection")
+	if err != nil {
+		log.Fatal("Error getting collection template: ", err)
+	}
+	prettyPrintJSON(collectionTemplateResponse)
+
+	// // Make an item-collections template request // can't figure this one out
+	// itemCollectionsTemplateResponse, err := client.GetTemplate("item-collections")
+	// if err != nil {
+	// 	log.Fatal("Error getting item collections template: ", err)
+	// }
+	// prettyPrintJSON(itemCollectionsTemplateResponse)
+
+	// Make an org-collection template request
+	orgCollectionsTemplateResponse, err := client.GetTemplate("org-collection")
+	if err != nil {
+		log.Fatal("Error getting org collection template: ", err)
+	}
+	prettyPrintJSON(orgCollectionsTemplateResponse)
+
+	// List vault items
+	items, err := client.ListVaultItems()
+	if err != nil {
+		log.Fatal("Error getting vault items: ", err)
+	}
+	prettyPrintJSON(items)
 }

@@ -27,6 +27,42 @@ type IClientSettings interface {
 	Sync() (schemas.SyncResponse, error)
 	Generate() (schemas.GeneratorResponse, error)
 	GetFingerprint() (schemas.FingerprintResponse, error)
+	GetTemplate() (schemas.Template, error)
+	GetLoginItem() (schemas.Item, error)
+	GetSecureNoteItem() (schemas.Item, error)
+	GetCardItem() (schemas.Item, error)
+	GetIdentityItem() (schemas.Item, error)
+	ListVaultItems() (schemas.ListVaultItemsResponse, error)
+}
+
+func (c *ClientSettings) ListVaultItems() (schemas.ListVaultItemsResponse, error) {
+	resp, err := http.Get(c.baseURL + "list/object/items")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var listVaultItemsResponse schemas.ListVaultItemsResponse
+	err = json.NewDecoder(resp.Body).Decode(&listVaultItemsResponse)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return listVaultItemsResponse, nil
+}
+
+func (c *ClientSettings) GetTemplate(_type string) (schemas.Template, error) {
+	resp, err := http.Get(c.baseURL + "object/template/" + _type)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var item schemas.Template
+	err = json.NewDecoder(resp.Body).Decode(&item)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return item, nil
 }
 
 func (c *ClientSettings) GetFingerprint() (schemas.FingerprintResponse, error) {
