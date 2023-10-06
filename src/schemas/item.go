@@ -138,3 +138,23 @@ type Identity struct {
 	PassportNumber *any    `json:"passportNumber,omitempty"`
 	LicenseNumber  *any    `json:"licenseNumber,omitempty"`
 }
+
+type ListVaultItemsResponse struct {
+	Success bool `json:"success"`
+	Data    struct {
+		Object string `json:"object"`
+		Data   []struct {
+			Object *string `json:"object"`
+			ID     *string `json:"id"`
+			CommonFields
+			Login         *Login      `json:"login,omitempty"`
+			CollectionIds *[]any      `json:"collectionIds"`
+			RevisionDate  *time.Time  `json:"revisionDate"`
+			CreationDate  *time.Time  `json:"creationDate"`
+			DeletedDate   *any        `json:"deletedDate"`
+			Identity      *Identity   `json:"identity,omitempty"`
+			Card          *Card       `json:"card,omitempty"`
+			SecureNote    *SecureNote `json:"secureNote,omitempty"`
+		} `json:"data"`
+	} `json:"data"`
+}
