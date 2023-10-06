@@ -165,4 +165,15 @@ func main() {
 		log.Fatal("Error getting vault items: ", err)
 	}
 	prettyPrintJSON(items)
+
+	// Get vault item
+	itemIds := items.Data.Data
+
+	for _, itemId := range itemIds {
+		item, err := client.GetVaultItem(itemId.ID)
+		if err != nil {
+			log.Fatal("Error getting vault item: ", err)
+		}
+		prettyPrintJSON(item)
+	}
 }

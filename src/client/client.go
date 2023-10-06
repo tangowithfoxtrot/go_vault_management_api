@@ -10,6 +10,7 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/google/uuid"
 	"github.com/tangowithfoxtrot/go_vault_management_api/src/schemas"
 )
 
@@ -28,11 +29,23 @@ type IClientSettings interface {
 	Generate() (schemas.GeneratorResponse, error)
 	GetFingerprint() (schemas.FingerprintResponse, error)
 	GetTemplate() (schemas.Template, error)
-	GetLoginItem() (schemas.Item, error)
-	GetSecureNoteItem() (schemas.Item, error)
-	GetCardItem() (schemas.Item, error)
-	GetIdentityItem() (schemas.Item, error)
 	ListVaultItems() (schemas.ListVaultItemsResponse, error)
+	GetVaultItem(itemId *uuid.UUID) (schemas.Item, error)
+}
+
+func (c *ClientSettings) GetVaultItem(itemId *uuid.UUID) (schemas.Item, error) {
+	resp, err := http.Get(c.baseURL + "object/item/" + itemId.String())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var item schemas.Item
+	err = json.NewDecoder(resp.Body).Decode(&item)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return item, nil
 }
 
 func (c *ClientSettings) ListVaultItems() (schemas.ListVaultItemsResponse, error) {

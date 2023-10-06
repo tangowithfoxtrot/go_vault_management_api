@@ -18,6 +18,18 @@ type CommonFields struct {
 }
 
 type Item struct {
+	Success bool `json:"success"`
+	Data    struct {
+		CommonFields
+		Login         *Login      `json:"login,omitempty"`
+		CollectionIds *[]any      `json:"collectionIds"`
+		RevisionDate  *time.Time  `json:"revisionDate"`
+		CreationDate  *time.Time  `json:"creationDate"`
+		DeletedDate   *any        `json:"deletedDate"`
+		Identity      *Identity   `json:"identity,omitempty"`
+		Card          *Card       `json:"card,omitempty"`
+		SecureNote    *SecureNote `json:"secureNote,omitempty"`
+	} `json:"data"`
 	CommonFields
 	Login      *any `json:"login,omitempty"`
 	SecureNote *any `json:"secureNote,omitempty"`
@@ -144,8 +156,8 @@ type ListVaultItemsResponse struct {
 	Data    struct {
 		Object string `json:"object"`
 		Data   []struct {
-			Object *string `json:"object"`
-			ID     *string `json:"id"`
+			Object *string    `json:"object"`
+			ID     *uuid.UUID `json:"id"`
 			CommonFields
 			Login         *Login      `json:"login,omitempty"`
 			CollectionIds *[]any      `json:"collectionIds"`
