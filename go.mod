@@ -2,7 +2,4 @@ module github.com/tangowithfoxtrot/go_vault_management_api
 
 go 1.21.1
 
-require (
-	github.com/google/uuid v1.3.1
-	github.com/gorilla/schema v1.2.0
-)
+require github.com/google/uuid v1.3.1
